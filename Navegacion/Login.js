@@ -1,0 +1,120 @@
+
+import React from "react"
+import {View, Text,TextInput, Image,StyleSheet, TouchableOpacity} from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from 'expo-status-bar';
+
+
+const Login = () =>{
+    const navegaction= useNavigation();
+  return(
+    <View style={styles.container}>
+     <Image source={require('./image.png')} style={styles.imgLogo} />
+
+     <Text style={styles.txtBien}>Bienvenido!</Text>
+            <Text style={styles.titulo}>Ingresar con tu cuenta</Text>
+
+            <TextInput placeholder='multimedios@gmail.com' style={styles.txtInput} />
+            <TextInput placeholder='contraseña' style={styles.txtInput} secureTextEntry={true} />
+
+            <TouchableOpacity >
+                <Text style={styles.txtOlvi}>¿Has olvidado tu contraseña?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+            onPress={()=>navegaction.navigate("Recuperar")}
+            >
+                <LinearGradient
+                    colors={['#00C1BB', '#005B58']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.btnLoginGradient}
+                >
+                    <Text style={styles.btnLoginText}>Iniciar Sesión</Text>
+                </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text style={styles.txtCrearCuenta}>
+                    No tiene cuenta. <Text style={styles.txtRigi}>Registrar</Text>
+                </Text>
+            </TouchableOpacity>
+
+            <StatusBar style="auto" />
+    </View>
+  );
+   
+
+}
+
+export default Login;
+
+
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  txtBien: {
+      fontSize: 50,
+      fontWeight: 'bold',
+      color: '#34434D',
+      textAlign: 'left',
+      paddingLeft: 30,
+  },
+  titulo: {
+      fontSize: 20,
+      fontWeight: '300',
+      color: 'gray',
+      textAlign: 'left',
+      paddingLeft: 30,
+  },
+  txtInput: {
+      width: '80%',
+      height: 50,
+      borderRadius: 30,
+      borderWidth: 1,
+      paddingLeft: 30,
+      marginTop: 20,
+      marginLeft: 20,
+      borderColor: 'grey',
+      color: 'grey',
+      backgroundColor: '#F5F5F5',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+  },
+  txtOlvi: {
+      fontSize: 18,
+      color: "#00c1bb",
+      marginTop: 10,
+  },
+  txtCrearCuenta: {
+      fontSize: 18,
+      color: "#00c1bb",
+      marginTop: 90,
+  },
+  txtRigi: {
+      color: "#00c1bb",
+      fontWeight: "bold"
+  },
+  imgLogo: {
+  
+  },
+  btnLoginGradient: {
+      borderRadius: 30,
+      width: 219,
+      height: 53,
+      marginTop: 35,
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  btnLoginText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#fff',
+  },
+});
