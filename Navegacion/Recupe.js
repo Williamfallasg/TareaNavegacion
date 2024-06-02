@@ -5,42 +5,42 @@ import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
 
 
-const Recuperar = () => {
-  
-  const navegaction= useNavigation();
+
+const Recupe = () => {
+    const navegaction= useNavigation();
 
   return (
     <View style={styles.container}>
       <Image source={require('./image.png')} style={styles.imgLogo} />
 
-      <Text style={styles.txtBien}>Recuperar
-       cuenta</Text>
-      <Text style={styles.titulo}>Ingresar su correo electronico para recuperar cuenta:</Text>
+      <Text style={styles.txtBien}>Recuperar cuenta</Text>
+      <Text style={styles.titulo}>Recupera su cuenta:</Text>
 
-      <TextInput placeholder='multimedios@gmail.com' style={styles.txtInput} />
-      
-      <TouchableOpacity style={styles.txtOlviContainer} onPress={()=>navegaction.navigate("Bienvenido")}>
+      <TextInput placeholder='Constraseña nueva' style={styles.txtInput} />
+      <TextInput placeholder='Confirmar Contraseña' style={styles.txtInput} />
+
+      <TouchableOpacity style={styles.txtOlviContainer}onPress={()=>navegaction.navigate("Bienvenido")}>
         <Text style={styles.txtOlvi}>Iniciar Sesión</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
-      onPress={()=>navegaction.navigate("Recupe")}>
+      onPress={()=>navegaction.navigate("Crear")}>
         <LinearGradient
-        
           colors={['#00C1BB', '#005B58']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.btnLoginGradient}
         >
-          <Text style={styles.btnLoginText}>Continuar</Text>
+          <Text style={styles.btnLoginText}>Restablecer</Text>
         </LinearGradient>
       </TouchableOpacity>
 
       <TouchableOpacity  onPress={()=>navegaction.navigate("Crear")}>
         <Text style={styles.txtCrearCuenta}>
-          No tiene cuenta.  
+          No tiene cuenta. 
         </Text>
-        <Text style={styles.txtRigi}>Registrate</Text>
+        <Text style={styles.txtRigi}>Registrar
+        </Text>
       </TouchableOpacity>
 
       <StatusBar style="auto" />
@@ -48,82 +48,87 @@ const Recuperar = () => {
   );
 }
 
-export default Recuperar;
+export default Recupe;
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: 10,
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+
   },
   txtBien: {
-      fontSize: 30,
+      fontSize: 50,
       fontWeight: 'bold',
       color: '#34434D',
-      alignSelf: 'flex-start',
-      marginBottom: 10,
+      paddingLeft: 30, 
+      textAlign: 'left',
   },
   titulo: {
-      fontSize: 18,
+      fontSize: 20,
       fontWeight: '300',
       color: 'gray',
-      alignSelf: 'flex-start',
-      marginBottom: 20,
+      textAlign: 'left',
+      paddingLeft: 30,
   },
   txtInput: {
       width: '95%',
       height: 50,
       borderRadius: 30,
       borderWidth: 1,
-      paddingLeft: 20,
+      paddingLeft: 30,
       marginTop: 20,
+      marginLeft: 20,
       borderColor: 'grey',
+      color: 'grey',
       backgroundColor: '#F5F5F5',
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
-      elevation: 5,
   },
   txtOlviContainer: {
     alignSelf: 'flex-end', 
-    marginTop: 10,
-    width: '100%', 
+    width: '100%'
   },
+  
   txtOlvi: {
       fontSize: 16,
       color: "#00c1bb",
-      marginTop: 10,
-      textAlign: 'right',
-      alignSelf: 'flex-end',
+      marginTop: 2,
+      textAlign: 'right'
   },
   txtCrearCuenta: {
-      fontSize: 16,
+      fontSize: 18,
       color: "#00c1bb",
       marginTop: 10,
-      textAlign: 'center',
+      alignContent: "center",
+
   },
   txtRigi: {
       color: "#00c1bb",
-      fontWeight: "bold"
+      fontWeight: "bold",
+      alignItems: 'center',
   },
   imgLogo: {
-    width: 403,
-    height: 306,
+    width: '100%',
+    height: 206,
+    resizeMode: 'cover',
   },
   btnLoginGradient: {
-    borderRadius: 30,
-    width: 219,
-    height: 53,
-    marginTop: 35,
-    justifyContent: 'center',
-    alignItems: 'center',
+      borderRadius: 30,
+      width: 219,
+      height: 53,
+      marginTop: 35,
+      justifyContent: 'center',
+      alignItems: 'center',
   },
   btnLoginText: {
-      fontSize: 16,
+      fontSize: 20,
       fontWeight: 'bold',
       color: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
   },
 });

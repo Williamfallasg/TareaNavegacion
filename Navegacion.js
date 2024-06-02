@@ -8,9 +8,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "./Navegacion/Login";
 import Recuperar from "./Navegacion/Recuperar";
-
-import HomeBtn from "./Navegacion/HomeBtn";
-import Home3 from "./Navegacion/Home3";
+import Recupe from "./Navegacion/Recupe";
+import Crear from "./Navegacion/Crear";
 
 
 
@@ -30,10 +29,26 @@ function Stacks(){
             name="Recuperar"
             component={Recuperar}
             />
+
+
+        <Stack.Screen
+            name="Recupe"
+            component={Recupe}
+            />
+
+        <Stack.Screen
+            name="Crear"
+            component={Crear}
+            />
+
+
+
+
+
         </Stack.Navigator>
+        
     );
 }
-
 export default function Navegacion() {
     return (
       <NavigationContainer>
