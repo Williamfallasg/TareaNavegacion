@@ -10,12 +10,10 @@ const Login = () => {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <Image source={require('./image.png')} style={styles.imgLogo} />
+            <Image source={require('./logo_fruit.png')} style={styles.imgLogo1} />
+            <Image source={require('./img_fondo.jpg')} style={styles.imgLogo} />
 
-            <Text style={styles.txtBien}>Bienvenido!</Text>
-            <Text style={styles.titulo}>Ingresar con tu cuenta</Text>
-
-            <TextInput placeholder='multimedios@gmail.com' style={styles.txtInput} />
+            <TextInput placeholder='correo electronico' style={styles.txtInput} />
             <TextInput placeholder='Contraseña' style={styles.txtInp} secureTextEntry={true} />
                
                
@@ -29,12 +27,12 @@ const Login = () => {
 
             <TouchableOpacity onPress={() => navigation.navigate("Bienvenido")}>
                 <LinearGradient
-                    colors={['#00C1BB', '#005B58']}
+                    colors={['#871F1F', '#871F1F']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                     style={styles.btnLoginGradient}
                 >
-                    <Text style={styles.btnLoginText}>Iniciar Sesión</Text>
+                    <Text style={styles.btnLoginText}>Ingresar</Text>
                 </LinearGradient>
             </TouchableOpacity>
 
@@ -54,11 +52,12 @@ export default Login;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 10,
+        flex: 20,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 10,
+        paddingTop: 5,
+        width: '100%',
     },
     txtBien: {
         fontSize: 60,
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
       marginLeft: 20,
       borderColor: 'grey',
       color: 'grey',
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#871FIF',
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
@@ -134,6 +133,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16,
     },
+    imgLogo1: {
+        width: '50',
+        height: 50,
+    
+    },
     imgLogo: {
         width: '100%',
         height: 306,
@@ -146,11 +150,12 @@ const styles = StyleSheet.create({
       marginTop: 10,
       justifyContent: 'center',
       alignItems: 'center',
+      color: '#F5F5F5'
     },
     btnLoginText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#fff',
+        color: '#F5F5F5',
         alignItems: 'center',
     },
     

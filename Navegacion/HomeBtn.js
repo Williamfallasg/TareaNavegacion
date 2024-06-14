@@ -7,13 +7,12 @@ import { StatusBar } from 'expo-status-bar';
 const HomeBtn = () => {
   return (
     <View style={styles.container}>
-      <Image source={require('./image.png')} style={styles.imgLogo} />
-
+      <Image source={require('./logo_fruit.png')} style={styles.imgLogo} />
       <Text style={styles.txtBien}>Recuperar cuenta</Text>
       <Text style={styles.titulo}>Recupera su cuenta:</Text>
 
-      <TextInput placeholder='Constraseña nueva' style={styles.txtInput} />
-      <TextInput placeholder='Confirmar Contraseña' style={styles.txtInput} />
+      <TextInput placeholder='correo electrónico' style={styles.txtInput} />
+      <TextInput placeholder='Contraseña' style={styles.txtInput} />
 
       <TouchableOpacity>
         <Text style={styles.txtOlvi}>Iniciar Sesion</Text>
@@ -21,7 +20,7 @@ const HomeBtn = () => {
 
       <TouchableOpacity>
         <LinearGradient
-          colors={['#00C1BB', '#005B58']}
+          colors={['#871F1F', '#871F1F']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.btnLoginGradient}
@@ -39,7 +38,6 @@ const HomeBtn = () => {
     </View>
   );
 }
-
 export default HomeBtn;
 
 const styles = StyleSheet.create({

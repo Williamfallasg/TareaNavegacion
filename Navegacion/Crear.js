@@ -3,36 +3,90 @@ import {View, Text,TextInput, Image,StyleSheet, TouchableOpacity} from "react-na
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
+import { useState } from "react";
+
+import appFirebase from '../Firebase';
+import { addDoc, collection, getFirestore } from "firebase/firestore";
+
+const db = getFirestore(appFirebase)
+
 
 const Crear = () => {
-  
+
   const navegaction= useNavigation();
+  const inicioEstado = {
+  nombreCompleto: '',
+  email: '',
+  clave: '',
+    }
+  const [estado, setEstado]= useState (inicioEstado)
+
+  const HandleChangeText = (value, name) => {
+    setEstado({ ...estado, [name]: value })
+  }
+
+  const RegistarUsuario = async()=>{
+    //console.log(estado)
+    try {
+      await addDoc(collection(db, 'usuarios'),{...estado})
+
+      Alert.alert('Alerta', 'El usuario se registró con éxito')
+
+      props.navigation.navigate('Login')
+     
+    } catch  {
+      console.error(error)
+    }
+  }
+  /*
+  const RegistarUsuario = ()=>{
+    console.log(estado)
+  }*/
 
   return (
     <View style={styles.container}>
-      <Image source={require('./image.png')} style={styles.imgLogo} />
+      
+      <Image source={require('./logo_fruit.png')} style={styles.imgLogo1} />
+      <Image source={require('./img_fondo.jpg')} style={styles.imgLogo} />
+      
 
-      <Text style={styles.txtBien}>Crear Cuenta</Text>
-      <Text style={styles.titulo}>Ingrese los datos solicitados:</Text>
 
-      <TextInput placeholder='Nombre completo' style={styles.txtInput} />
-      <TextInput placeholder='Correo electrónico' style={styles.txtInput} />
-      <TextInput placeholder='Contraseña' style={styles.txtInput} />
+      <Text style={styles.txtBien}>Crear Cuenta Nueva</Text>
+      <TextInput placeholder='Nombre completo' style={styles.txtInput} 
+      onChangeText={(value) => HandleChangeText(value, 'nombreCompleto')}
+      value={estado.nombreCompleto}
+      />
+      <TextInput placeholder='Correo electrónico' style={styles.txtInput} 
+      onChangeText={(value) => HandleChangeText(value, 'email')}
+      value={estado.email}
+      />
+      <TextInput placeholder=' Comprobar Contraseña' style={styles.txtInput} 
+      onChangeText={(value) => HandleChangeText(value, 'clave')}
+      value={estado.clave}
+      />
+       <TextInput placeholder='Contraseña' style={styles.txtInput} 
+      onChangeText={(value) => HandleChangeText(value, 'clave')}
+      value={estado.clave}
+      />
 
       <TouchableOpacity style={styles.txtOlviContainer} onPress={()=>navegaction.navigate("Bienvenido")}>
         <Text style={styles.txtOlvi}>Iniciar Sesión</Text>
       </TouchableOpacity>
 
       <TouchableOpacity 
-      onPress={()=>navegaction.navigate("Crear")}>
+      //</View>onPress={()=>navegaction.navigate("Crear")}
+
+      onPress={ RegistarUsuario}
+       >
         <LinearGradient
-          colors={['#00C1BB', '#005B58']}
+          colors={['#871F1F', '#871F1F']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.btnLoginGradient}
         >
-          <Text style={styles.btnLoginText}>Registrate</Text>
+          <Text style={styles.btnLoginText}>Registrarse</Text>
         </LinearGradient>
+        
       </TouchableOpacity>
 
       <TouchableOpacity  onPress={()=>navegaction.navigate("Recuperar")}>
@@ -41,9 +95,10 @@ const Crear = () => {
         </Text>
         <Text style={styles.txtRigi}>¿Has olvidado tu contraseña?</Text>
       </TouchableOpacity>
-      
+    
 
       <StatusBar style="auto" />
+  
     </View>
   );
 }
@@ -71,7 +126,7 @@ const styles = StyleSheet.create({
       color: 'gray',
   },
   txtInput: {
-    width: '95%',
+    width: 300,
     height: 50,
     borderRadius: 30,
     borderWidth: 1,
@@ -89,7 +144,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end', 
     width: '100%'
   },
-  
+
   txtOlvi: {
       fontSize: 16,
       color: "#00c1bb",
@@ -109,6 +164,12 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       textAlign: 'center',
   },
+  imgLogo1: {
+    width: 50,
+    height: 50,
+    resizeMode: 'cover',
+  },
+
   imgLogo: {
     width: '100%',
     height: 200,
@@ -121,6 +182,7 @@ const styles = StyleSheet.create({
       marginTop: 35,
       justifyContent: 'center',
       alignItems: 'center',
+      color: '#871F1F'
   },
   btnLoginText: {
       fontSize: 18,
