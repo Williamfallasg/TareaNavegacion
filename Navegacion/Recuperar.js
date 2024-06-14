@@ -74,7 +74,7 @@ const Crear = () => {
       </TouchableOpacity>
 
       <TouchableOpacity 
-      //</View>onPress={()=>navegaction.navigate("Crear")}
+      //</}
 
       onPress={ RegistarUsuario}
        >
