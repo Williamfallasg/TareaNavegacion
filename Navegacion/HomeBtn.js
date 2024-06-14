@@ -30,7 +30,7 @@ const HomeBtn = () => {
       </TouchableOpacity>
       <TouchableOpacity>
         <Text style={styles.txtCrearCuenta}>
-          N <Text style={styles.txtRigi}>Registrar</Text>
+          No tiene cuenta. <Text style={styles.txtRigi}>Registrar</Text>
         </Text>
       </TouchableOpacity>
 
@@ -92,6 +92,8 @@ const styles = StyleSheet.create({
       fontWeight: "bold"
   },
   imgLogo: {
+    borderRadius: 30,
+
   },
   btnLoginGradient: {
       borderRadius: 30,

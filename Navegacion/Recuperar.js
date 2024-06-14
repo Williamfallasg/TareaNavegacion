@@ -1,196 +1,172 @@
-import React from "react"
-import {View, Text,TextInput, Image,StyleSheet, TouchableOpacity} from "react-native";
+import React, { useState } from "react";
+import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
-import { useState } from "react";
 
 import appFirebase from '../Firebase';
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-const db = getFirestore(appFirebase)
-
+const db = getFirestore(appFirebase);
 
 const Crear = () => {
+    const navigation = useNavigation();
+    const inicioEstado = {
+        nombreProducto: '',
+        codigoProducto: '',
+        cantidad: '',
+        fechaCaducidad: ''
+    };
+    const [estado, setEstado] = useState(inicioEstado);
 
-  const navegaction= useNavigation();
-  const inicioEstado = {
-  nombreCompleto: '',
-  email: '',
-  clave: '',
-    }
-  const [estado, setEstado]= useState (inicioEstado)
+    const HandleChangeText = (value, name) => {
+        setEstado({ ...estado, [name]: value });
+    };
 
-  const HandleChangeText = (value, name) => {
-    setEstado({ ...estado, [name]: value })
-  }
+    const RegistrarProducto = async () => {
+        try {
+            await addDoc(collection(db, 'productos'), { ...estado });
+            Alert.alert('Alerta', 'El producto se registró con éxito');
+            navigation.navigate('Bienvenido');
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-  const RegistarUsuario = async()=>{
-    //console.log(estado)
-    try {
-      await addDoc(collection(db, 'usuarios'),{...estado})
-
-      Alert.alert('Alerta', 'El usuario se registró con éxito')
-
-      props.navigation.navigate('Login')
-     
-    } catch  {
-      console.error(error)
-    }
-  }
-  /*
-  const RegistarUsuario = ()=>{
-    console.log(estado)
-  }*/
-
-  return (
-    <View style={styles.container}>
-      
-      <Image source={require('./logo_fruit.png')} style={styles.imgLogo1} />
-      <Image source={require('./img_fondo.jpg')} style={styles.imgLogo} />
-      
-
-
-      <Text style={styles.txtBien}>Productos</Text>
-      <TextInput placeholder='Nombre producto' style={styles.txtInput} 
-      onChangeText={(value) => HandleChangeText(value, 'nombreCompleto')}
-      value={estado.nombreCompleto}
-      />
-      <TextInput placeholder='Codigo Producto' style={styles.txtInput} 
-      onChangeText={(value) => HandleChangeText(value, 'email')}
-      value={estado.email}
-      />
-      <TextInput placeholder=' Cantidad ' style={styles.txtInput} 
-      onChangeText={(value) => HandleChangeText(value, 'clave')}
-      value={estado.clave}
-      />
-       <TextInput placeholder='Fecha caducidad' style={styles.txtInput} 
-      onChangeText={(value) => HandleChangeText(value, 'clave')}
-      value={estado.clave}
-      />
-
-      <TouchableOpacity style={styles.txtOlviContainer} onPress={()=>navegaction.navigate("Bienvenido")}>
-        <Text style={styles.txtOlvi}>Iniciar Sesión</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity 
-      //</}
-
-      onPress={ RegistarUsuario}
-       >
-        <LinearGradient
-          colors={['#871F1F', '#871F1F']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.btnLoginGradient}
-        >
-          <Text style={styles.btnLoginText}>Guardar</Text>
-        </LinearGradient>
-        
-      </TouchableOpacity>
-
-      <TouchableOpacity  onPress={()=>navegaction.navigate("Recuperar")}>
-        <Text style={styles.txtCrearCuenta}>
-          Ya tiene cuenta 
-        </Text>
-        <Text style={styles.txtRigi}>Productos</Text>
-      </TouchableOpacity>
-    
-
-      <StatusBar style="auto" />
-  
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <Image source={require('./image2.png')} style={styles.imgBackground} />
+            <View style={styles.overlay} />
+            <View style={styles.content}>
+                <View style={styles.formContainer}>
+                    <Text style={styles.txtBien}>Productos</Text>
+                    <TextInput
+                        placeholder='Nombre Producto'
+                        style={styles.txtInput}
+                        onChangeText={(value) => HandleChangeText(value, 'nombreProducto')}
+                        value={estado.nombreProducto}
+                        placeholderTextColor="gray"
+                    />
+                    <TextInput
+                        placeholder='Código Producto'
+                        style={styles.txtInput}
+                        onChangeText={(value) => HandleChangeText(value, 'codigoProducto')}
+                        value={estado.codigoProducto}
+                        placeholderTextColor="gray"
+                    />
+                    <TextInput
+                        placeholder='Cantidad'
+                        style={styles.txtInput}
+                        onChangeText={(value) => HandleChangeText(value, 'cantidad')}
+                        value={estado.cantidad}
+                        placeholderTextColor="gray"
+                    />
+                    <TextInput
+                        placeholder='Fecha caducidad'
+                        style={styles.txtInput}
+                        onChangeText={(value) => HandleChangeText(value, 'fechaCaducidad')}
+                        value={estado.fechaCaducidad}
+                        placeholderTextColor="gray"
+                    />
+                    <TouchableOpacity onPress={RegistrarProducto}>
+                        <LinearGradient
+                            colors={['#871F1F', '#871F1F']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 1 }}
+                            style={styles.btnLoginGradient}
+                        >
+                            <Text style={styles.btnLoginText}>Guardar</Text>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <StatusBar style="auto" />
+        </View>
+    );
 }
 
 export default Crear;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 10,
-  },
-  txtBien: {
-      fontSize: 50,
-      fontWeight: 'bold',
-      color: '#34434D',
-      paddingLeft: 2, 
-      textAlign: 'left',
-  },
-  titulo: {
-      fontSize: 18,
-      fontWeight: '300',
-      color: 'gray',
-  },
-  txtInput: {
-    width: 200,
-    height: 50,
-    borderRadius: 30,
-    borderWidth: 1,
-    paddingLeft: 20,
-    marginTop: 20,
-    borderColor: 'grey',
-    backgroundColor: '#F5F5F5',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  txtOlviContainer: {
-    alignSelf: 'flex-end', 
-    width: '100%'
-  },
-
-  txtOlvi: {
-      fontSize: 16,
-      color: "#00c1bb",
-      marginTop: 2,
-      textAlign: 'right'
-  },
-  txtCrearCuenta: {
-      fontSize: 18,
-      color: "#00c1bb",
-      marginTop: 2,
-      alignItems: 'center',
-      justifyContent: 'center',
-      
-  },
-  txtRigi: {
-      color: "#00c1bb",
-      fontWeight: "bold",
-      textAlign: 'center',
-  },
-  imgLogo1: {
-    width: 50,
-    height: 50,
-    resizeMode: 'cover',
-  },
-
-  imgLogo: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-  },
-  btnLoginGradient: {
-      borderRadius: 30,
-      width: 219,
-      height: 53,
-      marginTop: 35,
-      justifyContent: 'center',
-      alignItems: 'center',
-      color: '#871F1F'
-  },
-  btnLoginText: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+        paddingTop: 5,
+    },
+    imgBackground: {
+        width: 350,
+        height: 300,
+        marginBottom: 2,
+        marginHorizontal: 10,
+        padding: 10,
+        borderRadius:50,
+    },
+    overlay: {
+        position: 'relative',
+        width: '10%',
+        height: '10%',
+    },
+    content: {
+        width: '80%',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    imgLogo: {
+        width: 150,
+        height: 150,
+        borderRadius:100,
+        marginBottom: 1,
+        marginHorizontal: 1,
+        padding: 5,
+        marginBottom: 5,
+    },
+    formContainer: {
+        backgroundColor: 'rgba(255, 299, 255, 0.9)',
+        padding: 10,
+        borderRadius: 20,
+        width: '100%',
+        alignItems: 'center',
+        marginBottom: 90,
+        marginHorizontal: 50,
+    },
+    txtBien: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#34434D',
+        marginBottom: 20,
+    },
+    txtInput: {
+        width: '80%',
+        height: 50,
+        borderRadius: 25,
+        borderWidth: 1,
+        paddingLeft: 20,
+        marginTop: 15,
+        borderColor: 'gray',
+        backgroundColor: '#FFF',
+        color: 'black',
+    },
+    btnLoginGradient: {
+        borderRadius: 25,
+        width: 200,
+        height: 50,
+        marginTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btnLoginText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    txtCrearCuentaContainer: {
+        marginTop: 10,
+        color: '#FFF',
+    },
+    txtCrearCuenta: {
+        fontSize: 14,
+        color: "#FFF",
+        textAlign: 'center',
+    },
 });

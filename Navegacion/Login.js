@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
         marginBottom: 90,
+        borderRadius: 50,
     },
     txtInput: {
         width: '100%',
