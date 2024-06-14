@@ -8,7 +8,7 @@ const HomeBtn = () => {
   return (
     <View style={styles.container}>
       <Image source={require('./logo_fruit.png')} style={styles.imgLogo} />
-      <Text style={styles.txtBien}>Recuperar cuenta</Text>
+     
       <Text style={styles.titulo}>Recupera su cuenta:</Text>
 
       <TextInput placeholder='correo electrónico' style={styles.txtInput} />
@@ -30,7 +30,7 @@ const HomeBtn = () => {
       </TouchableOpacity>
       <TouchableOpacity>
         <Text style={styles.txtCrearCuenta}>
-          No tiene cuenta. <Text style={styles.txtRigi}>Registrar</Text>
+          N <Text style={styles.txtRigi}>Registrar</Text>
         </Text>
       </TouchableOpacity>
 

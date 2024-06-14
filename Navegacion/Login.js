@@ -18,7 +18,7 @@ const Login = () => {
                
                
             <TouchableOpacity style={styles.txtOlviContainer} onPress={() => navigation.navigate("Recuperar")}>
-                <Text style={styles.txtOlvi}>¿Has olvidado tu contraseña?</Text>
+                <Text style={styles.txtOlvi}>Productos</Text>
             </TouchableOpacity>
 
             
@@ -37,10 +37,9 @@ const Login = () => {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate("Crear")}>
-                <Text style={styles.txtCrearCuenta}>
-                    No tiene cuenta.  
+                <Text style={styles.txtCrearCuenta}>  
                 </Text>
-               <Text style={styles.txtRigi}>Registrarse</Text>
+               <Text style={styles.txtRigi}>Registrar producto</Text>
             </TouchableOpacity>
 
             <StatusBar style="auto" />

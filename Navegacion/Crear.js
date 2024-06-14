@@ -93,7 +93,7 @@ const Crear = () => {
         <Text style={styles.txtCrearCuenta}>
           Ya tiene cuenta 
         </Text>
-        <Text style={styles.txtRigi}>¿Has olvidado tu contraseña?</Text>
+        <Text style={styles.txtRigi}>Productos</Text>
       </TouchableOpacity>
     
 
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
       color: 'gray',
   },
   txtInput: {
-    width: 300,
+    width: 200,
     height: 50,
     borderRadius: 30,
     borderWidth: 1,
