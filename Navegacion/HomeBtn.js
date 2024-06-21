@@ -1,111 +1,124 @@
-import React from "react"
-import {View, Text,TextInput, Image,StyleSheet, TouchableOpacity} from "react-native";
+import React from "react";
+import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const HomeBtn = () => {
   return (
-    <View style={styles.container}>
-      <Image source={require('./logo_fruit.png')} style={styles.imgLogo} />
-     
-      <Text style={styles.titulo}>Recupera su cuenta:</Text>
+    <ImageBackground source={require('./image.png')} style={styles.background}>
+      <View style={styles.container}>
+        <Image source={require('./logo_fruit.png')} style={styles.imgLogo} />
+        
+        <View style={styles.inputContainer}>
+          <Icon name="envelope" size={20} color="#FFFFFF" style={styles.icon} />
+          <TextInput
+            placeholder='correo electrónico'
+            placeholderTextColor="#FFFFFF"
+            style={styles.txtInput}
+          />
+        </View>
 
-      <TextInput placeholder='correo electrónico' style={styles.txtInput} />
-      <TextInput placeholder='Contraseña' style={styles.txtInput} />
+        <View style={styles.inputContainer}>
+          <Icon name="lock" size={20} color="#FFFFFF" style={styles.icon} />
+          <TextInput
+            placeholder='contraseña'
+            placeholderTextColor="#FFFFFF"
+            style={styles.txtInput}
+            secureTextEntry={true}
+          />
+        </View>
 
-      <TouchableOpacity>
-        <Text style={styles.txtOlvi}>Iniciar Sesion</Text>
-      </TouchableOpacity>
+        <TouchableOpacity>
+          <LinearGradient
+            colors={['#871F1F', '#871F1F']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.btnLoginGradient}
+          >
+            <Text style={styles.btnLoginText}>Ingresar</Text>
+          </LinearGradient>
+        </TouchableOpacity>
 
-      <TouchableOpacity>
-        <LinearGradient
-          colors={['#871F1F', '#871F1F']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.btnLoginGradient}
-        >
-          <Text style={styles.btnLoginText}>Restablecer</Text>
-        </LinearGradient>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={styles.txtCrearCuenta}>
-          No tiene cuenta. <Text style={styles.txtRigi}>Registrar</Text>
-        </Text>
-      </TouchableOpacity>
-
-      <StatusBar style="auto" />
-    </View>
+        <TouchableOpacity>
+          <Text style={styles.txtCrearCuenta}>
+            Crear cuenta nueva 
+            <Text style={styles.txtRigi}>Regístrate</Text>
+          </Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity>
+          <Text style={styles.txtOlvi}>Olvidé contraseña?</Text>
+        </TouchableOpacity>
+        
+        <StatusBar style="auto" />
+      </View>
+    </ImageBackground>
   );
 }
 export default HomeBtn;
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  txtBien: {
-      fontSize: 50,
-      fontWeight: 'bold',
-      color: '#34434D',
-      paddingLeft: 30, 
-      textAlign: 'left',
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    height: 50,
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    marginTop: 20,
   },
-  titulo: {
-      fontSize: 20,
-      fontWeight: '300',
-      color: 'gray',
-      textAlign: 'left',
-      paddingLeft: 30,
+  icon: {
+    paddingLeft: 20,
   },
   txtInput: {
-      width: '80%',
-      height: 50,
-      borderRadius: 30,
-      borderWidth: 1,
-      paddingLeft: 30,
-      marginTop: 20,
-      marginLeft: 20,
-      borderColor: 'grey',
-      color: 'grey',
-      backgroundColor: '#F5F5F5',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
+    flex: 1,
+    paddingLeft: 10,
+    color: 'white',
   },
   txtOlvi: {
-      fontSize: 18,
-      color: "#00c1bb",
-      marginTop: 10,
+    fontSize: 14,
+    color: "#FFFFFF",
+    marginTop: 20,
   },
   txtCrearCuenta: {
-      fontSize: 18,
-      color: "#00c1bb",
-      marginTop: 90,
+    fontSize: 14,
+    color: "#FFFFFF",
+    marginTop: 40,
   },
   txtRigi: {
-      color: "#00c1bb",
-      fontWeight: "bold"
+    color: "#FFFFFF",
+    fontWeight: "bold"
   },
   imgLogo: {
-    borderRadius: 30,
-
+    width: 100,
+    height: 100,
+    marginBottom: 60,
   },
   btnLoginGradient: {
-      borderRadius: 30,
-      width: 219,
-      height: 53,
-      marginTop: 35,
-      justifyContent: 'center',
-      alignItems: 'center',
+    borderRadius: 30,
+    width: 200,
+    height: 50,
+    marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnLoginText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 });

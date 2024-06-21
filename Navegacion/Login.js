@@ -3,6 +3,7 @@ import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity } from "reac
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -12,17 +13,25 @@ const Login = () => {
             <View style={styles.overlay} />
             <View style={styles.content}>
                 <Image source={require('./logo_fruit.png')} style={styles.imgLogo} />
-                <TextInput 
-                    placeholder='correo electrónico' 
-                    style={styles.txtInput} 
-                    placeholderTextColor="gray" 
-                />
-                <TextInput 
-                    placeholder='contraseña' 
-                    style={styles.txtInput} 
-                    secureTextEntry={true} 
-                    placeholderTextColor="gray" 
-                />
+                
+                <View style={styles.inputContainer}>
+                    <Icon name="envelope" size={20} color="gray" style={styles.icon} />
+                    <TextInput 
+                        placeholder='correo electrónico' 
+                        style={styles.txtInput} 
+                        placeholderTextColor="gray" 
+                    />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Icon name="lock" size={20} color="gray" style={styles.icon} />
+                    <TextInput 
+                        placeholder='contraseña' 
+                        style={styles.txtInput} 
+                        secureTextEntry={true} 
+                        placeholderTextColor="gray" 
+                    />
+                </View>
 
                 <TouchableOpacity 
                     onPress={() => navigation.navigate("Recuperar")} 
@@ -46,8 +55,9 @@ const Login = () => {
                     onPress={() => navigation.navigate("Crear")} 
                     style={styles.txtCrearCuentaContainer}
                 >
-                    <Text style={styles.txtCrearCuenta}></Text>
-                    <Text style={styles.txtRigi}>Regístrar Producto</Text>
+                    <Text style={styles.txtCrearCuenta}>Crear cuenta nueva</Text>
+                    <Text style={styles.txtRigi}>Regístrate</Text>
+                    <Text style={styles.txtRi}>Olvidó contraseña</Text>
                 </TouchableOpacity>
             </View>
             <StatusBar style="auto" />
@@ -87,15 +97,23 @@ const styles = StyleSheet.create({
         marginBottom: 90,
         borderRadius: 50,
     },
-    txtInput: {
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         width: '100%',
         height: 50,
         borderRadius: 25,
         borderWidth: 1,
-        paddingLeft: 20,
-        marginTop: 20,
         borderColor: 'gray',
         backgroundColor: '#FFF',
+        marginTop: 20,
+    },
+    icon: {
+        paddingLeft: 20,
+    },
+    txtInput: {
+        flex: 1,
+        paddingLeft: 10,
         color: 'black',
     },
     txtOlviContainer: {
@@ -130,7 +148,12 @@ const styles = StyleSheet.create({
     },
     txtRigi: {
         fontSize: 14,
-        color: "#00c1bb",
+        color: "#FFF",
+        fontWeight: "bold",
+    },
+    txtRi: {
+        fontSize: 14,
+        color: "#FFF",
         fontWeight: "bold",
     },
 });
