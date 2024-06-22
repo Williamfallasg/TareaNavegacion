@@ -1,92 +1,104 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Image, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
 
 import appFirebase from '../Firebase';
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore, doc, updateDoc } from "firebase/firestore";
 
 const db = getFirestore(appFirebase);
 
 const Crear = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const producto = route.params?.producto;
+
     const inicioEstado = {
-        nombreCompleto: '',
-        email: '',
-        clave: '',
-        comprobarClave: ''
+        nombreProducto: '',
+        codigoProducto: '',
+        cantidad: '',
+        fechaCaducidad: ''
     };
+
     const [estado, setEstado] = useState(inicioEstado);
+
+    useEffect(() => {
+        if (producto) {
+            setEstado(producto);
+        }
+    }, [producto]);
 
     const HandleChangeText = (value, name) => {
         setEstado({ ...estado, [name]: value });
     };
 
-    const RegistarUsuario = async () => {
-        try {
-            await addDoc(collection(db, 'usuarios'), { ...estado });
-            Alert.alert('Alerta', 'El usuario se registró con éxito');
-            navigation.navigate('Login');
-        } catch (error) {
-            console.error(error);
+    const RegistrarProducto = async () => {
+        if (producto) {
+            try {
+                await updateDoc(doc(db, 'productos', producto.id), { ...estado });
+                Alert.alert('Alerta', 'El producto se actualizó con éxito');
+                navigation.navigate('Bienvenido');
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            try {
+                await addDoc(collection(db, 'productos'), { ...estado });
+                Alert.alert('Alerta', 'El producto se registró con éxito');
+                navigation.navigate('Bienvenido');
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
     return (
         <View style={styles.container}>
-          
             <Image source={require('./image2.png')} style={styles.imgBackground} />
-           
             <View style={styles.overlay} />
             <View style={styles.content}>
-          
                 <View style={styles.formContainer}>
-                    <Text style={styles.txtBien}>Crear cuenta nueva</Text>
+                    <Text style={styles.txtBien}>{producto ? 'Modificar Producto' : 'Productos'}</Text>
                     <TextInput
-                        placeholder='Nombre completo'
+                        placeholder='Nombre Producto'
                         style={styles.txtInput}
-                        onChangeText={(value) => HandleChangeText(value, 'nombreCompleto')}
-                        value={estado.nombreCompleto}
+                        onChangeText={(value) => HandleChangeText(value, 'nombreProducto')}
+                        value={estado.nombreProducto}
                         placeholderTextColor="gray"
                     />
                     <TextInput
-                        placeholder='Correo electrónico'
+                        placeholder='Código Producto'
                         style={styles.txtInput}
-                        onChangeText={(value) => HandleChangeText(value, 'email')}
-                        value={estado.email}
+                        onChangeText={(value) => HandleChangeText(value, 'codigoProducto')}
+                        value={estado.codigoProducto}
                         placeholderTextColor="gray"
                     />
                     <TextInput
-                        placeholder='Contraseña'
+                        placeholder='Cantidad'
                         style={styles.txtInput}
-                        onChangeText={(value) => HandleChangeText(value, 'clave')}
-                        value={estado.clave}
+                        onChangeText={(value) => HandleChangeText(value, 'cantidad')}
+                        value={estado.cantidad}
                         placeholderTextColor="gray"
-                        secureTextEntry={true}
                     />
                     <TextInput
-                        placeholder='Comprobar contraseña'
+                        placeholder='Fecha caducidad'
                         style={styles.txtInput}
-                        onChangeText={(value) => HandleChangeText(value, 'comprobarClave')}
-                        value={estado.comprobarClave}
+                        onChangeText={(value) => HandleChangeText(value, 'fechaCaducidad')}
+                        value={estado.fechaCaducidad}
                         placeholderTextColor="gray"
-                        secureTextEntry={true}
                     />
-                    <TouchableOpacity onPress={RegistarUsuario}>
+                    <TouchableOpacity onPress={RegistrarProducto}>
                         <LinearGradient
                             colors={['#871F1F', '#871F1F']}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 1, y: 1 }}
                             style={styles.btnLoginGradient}
                         >
-                            <Text style={styles.btnLoginText}>Registrarse</Text>
+                            <Text style={styles.btnLoginText}>{producto ? 'Actualizar' : 'Guardar'}</Text>
                         </LinearGradient>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.txtCrearCuentaContainer}>
-                    <Text style={styles.txtCrearCuenta}>Ya tiene cuenta? Iniciar Sesión</Text>
-                </TouchableOpacity>
             </View>
             <StatusBar style="auto" />
         </View>
@@ -101,36 +113,43 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
-        marginHorizontal:'30'
-        
+        paddingTop: 5,
     },
     imgBackground: {
-      width: 350,
-      height: 300,
-      marginBottom: 2,
-      marginHorizontal: 10,
-      padding: 10,
-      borderRadius:50,
+        width: 350,
+        height: 300,
+        marginBottom: 2,
+        marginHorizontal: 10,
+        padding: 10,
+        borderRadius: 50,
+    },
+    overlay: {
+        position: 'relative',
+        width: '10%',
+        height: '10%',
     },
     content: {
-        width: '70%',
+        width: '80%',
         alignItems: 'center',
-        zIndex: 1,
+        position: 'relative',
     },
     imgLogo: {
-        width: 80,
-        height: 80,
-        marginBottom: 0,
-        borderRadius:30,
-        marginTop: 0
+        width: 150,
+        height: 150,
+        borderRadius: 100,
+        marginBottom: 1,
+        marginHorizontal: 1,
+        padding: 5,
+        marginBottom: 5,
     },
     formContainer: {
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        padding: 2,
-        borderRadius: 15,
-        width: '90%',
+        padding: 10,
+        borderRadius: 20,
+        width: '100%',
         alignItems: 'center',
-        marginTop: 10
+        marginBottom: 90,
+        marginHorizontal: 50,
     },
     txtBien: {
         fontSize: 24,
@@ -139,7 +158,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     txtInput: {
-        width: '100%',
+        width: '80%',
         height: 50,
         borderRadius: 25,
         borderWidth: 1,
@@ -153,17 +172,17 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         width: 200,
         height: 50,
-        marginTop: 20,
+        marginTop: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
     btnLoginText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#FFF',
     },
     txtCrearCuentaContainer: {
-        marginTop: 60,
+        marginTop: 10,
+        color: '#FFF',
     },
     txtCrearCuenta: {
         fontSize: 14,

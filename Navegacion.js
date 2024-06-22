@@ -10,6 +10,10 @@ import Login from "./Navegacion/Login";
 import Recuperar from "./Navegacion/Recuperar";
 import Recupe from "./Navegacion/Recupe";
 import Crear from "./Navegacion/Crear";
+import HomeBtn from "./Navegacion/HomeBtn";
+import ProductList from "./Navegacion/ProductList";
+import AprenderMas from "./Navegacion/AprenderMas";
+
 
 
 
@@ -18,31 +22,31 @@ const Stack = createStackNavigator();
 function Stacks(){
     return(
         <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName="HomeBtn"
         >
         <Stack.Screen
             name="Bienvenido"
+            component={HomeBtn}
+            />
+           
+           <Stack.Screen
+            name="Login"
             component={Login}
             />
-
-        <Stack.Screen
-            name="Recuperar"
-            component={Recuperar}
-            />
-
-
-        <Stack.Screen
-            name="Recupe"
-            component={Recupe}
-            />
-
-        <Stack.Screen
+           
+           <Stack.Screen
             name="Crear"
             component={Crear}
             />
+        <Stack.Screen
+            name="ProductList"
+            component={ProductList}
+            />  
 
-
-
+        <Stack.Screen
+            name="AprenderMas"
+            component={AprenderMas}
+            />  
 
 
         </Stack.Navigator>

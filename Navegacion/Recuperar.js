@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
 
+
 import appFirebase from '../Firebase';
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 
